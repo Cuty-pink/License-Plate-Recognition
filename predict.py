@@ -46,13 +46,13 @@ def seperate_card(img, waves):
 		part_cards.append(img[:, wave[0]:wave[1]])
 	return part_cards
 
-#来自opencv的sample，用于svm训练
+#来自opencv的sample，用于svm训练 使用其二阶矩对图像进行偏斜校正
 def deskew(img):
-	m = cv2.moments(img)
-	if abs(m['mu02']) < 1e-2:
+	m = cv2.moments(img)    #  获取图像的轮廓矩
+	if abs(m['mu02']) < 1e-2:     # 二阶中心矩
 		return img.copy()
 	skew = m['mu11']/m['mu02']
-	M = np.float32([[1, skew, -0.5*SZ*skew], [0, 1, 0]])
+	M = np.float32([[1, skew, -0.5*SZ*skew], [0, 1, 0]])  # 运算矩阵
 	img = cv2.warpAffine(img, M, (SZ, SZ), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
 	return img
 #来自opencv的sample，用于svm训练
