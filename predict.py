@@ -49,9 +49,9 @@ def seperate_card(img, waves):
 #来自opencv的sample，用于svm训练 使用其二阶矩对图像进行偏斜校正
 def deskew(img):
 	m = cv2.moments(img)    #  获取图像的轮廓矩
-	if abs(m['mu02']) < 1e-2:     # 二阶中心矩
+	if abs(m['mu02']) < 1e-2:     # 二阶中心矩 检查图像沿垂直轴的方差是否非常小(小于0.01)
 		return img.copy()
-	skew = m['mu11']/m['mu02']
+	skew = m['mu11']/m['mu02']  # 计算图像的倾斜度，mu11是图像在水平和垂直轴之间的协方差
 	M = np.float32([[1, skew, -0.5*SZ*skew], [0, 1, 0]])  # 运算矩阵
 	img = cv2.warpAffine(img, M, (SZ, SZ), flags=cv2.WARP_INVERSE_MAP | cv2.INTER_LINEAR)
 	return img
