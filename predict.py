@@ -59,10 +59,10 @@ def deskew(img):
 def preprocess_hog(digits):
 	samples = []
 	for img in digits:
-		gx = cv2.Sobel(img, cv2.CV_32F, 1, 0)
-		gy = cv2.Sobel(img, cv2.CV_32F, 0, 1)
-		mag, ang = cv2.cartToPolar(gx, gy)
-		bin_n = 16
+		gx = cv2.Sobel(img, cv2.CV_32F, 1, 0)  # x方向梯度
+		gy = cv2.Sobel(img, cv2.CV_32F, 0, 1)  # y方向梯度
+		mag, ang = cv2.cartToPolar(gx, gy)  # 直角坐标映射到极坐标
+		bin_n = 16    # 将角度划分为16个方向
 		bin = np.int32(bin_n*ang/(2*np.pi))
 		bin_cells = bin[:10,:10], bin[10:,:10], bin[:10,10:], bin[10:,10:]
 		mag_cells = mag[:10,:10], mag[10:,:10], mag[:10,10:], mag[10:,10:]
