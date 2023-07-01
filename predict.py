@@ -66,6 +66,7 @@ def preprocess_hog(digits):
 		bin = np.int32(bin_n*ang/(2*np.pi))
 		bin_cells = bin[:10,:10], bin[10:,:10], bin[:10,10:], bin[10:,10:]
 		mag_cells = mag[:10,:10], mag[10:,:10], mag[:10,10:], mag[10:,10:]
+		# ravel 将多维数组降为一维
 		hists = [np.bincount(b.ravel(), m.ravel(), bin_n) for b, m in zip(bin_cells, mag_cells)]
 		hist = np.hstack(hists)
 		
