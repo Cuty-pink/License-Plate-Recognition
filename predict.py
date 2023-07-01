@@ -29,7 +29,7 @@ def find_waves(threshold, histogram):
 	wave_peaks = []
 	for i,x in enumerate(histogram):
 		if is_peak and x < threshold:
-			if i - up_point > 2:
+			if i - up_point > 2:   # 上升点到当前位置的距离大于2个像素
 				is_peak = False
 				wave_peaks.append((up_point, i))
 		elif not is_peak and x >= threshold:
